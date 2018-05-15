@@ -17,6 +17,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<build>
+	<finalName>application_${env.BUILD_NUMBER}</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
