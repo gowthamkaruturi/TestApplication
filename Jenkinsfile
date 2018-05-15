@@ -27,6 +27,7 @@ pipeline {
     sh  'cp target/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all'
       }
     }
+    }
     post{
     always{
       archiveArtifacts artifacts: 'target/*.jar' , fingerprint :true
