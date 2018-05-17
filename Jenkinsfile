@@ -9,6 +9,10 @@ pipeline {
   }
   stages{
   	stage('test'){
+    agent {
+    label 'apache'
+
+    }
   	    steps{
   	        sh 'mvn test'
   	        junit '**/target/surefire-reports/*.xml'
@@ -17,20 +21,40 @@ pipeline {
   	}
 
     stage('build'){
+    agent {
+    label 'apache'
+
+    }
     steps{
         sh 'mvn -version '
           sh 'mvn compile package'
         }
       }
       stage('deploy'){
+      agent {
+      label 'apache'
+
+      }
     steps{
     sh  'cp target/application_*.jar /var/www/html/rectangles/all'
       }
     }
+    
+stage('running on centos'){
+	agent {
+	label 'CentOS'
+	}
+	steps{
+	
+	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
+	sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+	}
     }
+    
     post{
     always{
       archiveArtifacts artifacts: 'target/*.jar' , fingerprint :true
     }
     }
+  }
   }
