@@ -43,7 +43,7 @@ pipeline {
       }
     }
     
-stage('running on centos'){
+/*stage('running on centos'){
 	agent {
 	label 'CentOS'
 	}
@@ -52,7 +52,20 @@ stage('running on centos'){
 	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
 	sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
 	}
-    }
+    }*/
+    
+    
+    stage("running on debian")
+     {
+    agent 
+    {
+    docker 'openjdk:8u171-slim-stretch'
+}
+steps{
+sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
+sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+ }
+}
     
    
   }
