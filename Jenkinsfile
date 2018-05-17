@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-  node{
-  label 'master'
-  }
-  }
+  agent none
   tools {
     maven 'MAVEN_HOME'
   }
@@ -21,6 +17,7 @@ pipeline {
   	}
 
     stage('build'){
+    
     agent {
     label 'apache'
 
