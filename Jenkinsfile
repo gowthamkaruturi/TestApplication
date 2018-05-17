@@ -4,6 +4,7 @@ pipeline {
     maven 'MAVEN_HOME'
   }
   stages{
+  
   	stage('test'){
     agent {
     label 'apache'
@@ -26,6 +27,11 @@ pipeline {
         sh 'mvn -version '
           sh 'mvn compile package'
         }
+         post{
+    success{
+      archiveArtifacts artifacts: 'target/*.jar' , fingerprint :true
+    }
+    }
       }
       stage('deploy'){
       agent {
@@ -48,10 +54,6 @@ stage('running on centos'){
 	}
     }
     
-    post{
-    always{
-      archiveArtifacts artifacts: 'target/*.jar' , fingerprint :true
-    }
-    }
+   
   }
   }
