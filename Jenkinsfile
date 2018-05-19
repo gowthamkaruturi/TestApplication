@@ -62,9 +62,16 @@ pipeline {
     docker 'openjdk:8u121-jre'
 }
 steps{
-sh "wget http://gowthamkaruturi1.mylabserver.com:8080/rectangles/all/apllication_${env.BUILD_NUMBER}.jar"
+sh "wget http://gowthamkaruturi1.mylabserver.com:8080/rectangles/all/application_${env.BUILD_NUMBER}.jar"
 sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
  }
+}
+stage("promote to green")
+{
+steps{
+sh "cp /var/www/html/rectangles/all/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.BUILD_NUMBER}.jar "
+}
+
 }
 
 
