@@ -49,8 +49,8 @@ pipeline {
 	}
 	steps{
 
-	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
-	sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/application_${env.BUILD_NUMBER}.jar"
+	sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
 	}
     }*/
 
@@ -62,8 +62,8 @@ pipeline {
     docker 'openjdk:8u121-jre'
 }
 steps{
-sh "wget http://gowthamkaruturi1.mylabserver.com:8080/rectangles/all/application_${env.BUILD_NUMBER}.jar"
-sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/application_${env.BUILD_NUMBER}.jar"
+sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
  }
 }
 stage("promote to green")
