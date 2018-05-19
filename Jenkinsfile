@@ -68,6 +68,10 @@ sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
 }
 stage("promote to green")
 {
+agent {
+label 'apache'
+
+}
 steps{
 sh "cp /var/www/html/rectangles/all/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.BUILD_NUMBER}.jar "
 }
