@@ -39,9 +39,9 @@ pipeline {
 
       }
     steps{
-    sh 'mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}'
+    sh "mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
 
-    sh  'cp target/application_*.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}'
+    sh  "cp target/application_*.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
     }
 
