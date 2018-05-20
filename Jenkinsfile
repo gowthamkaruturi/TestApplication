@@ -64,10 +64,8 @@ pipeline {
     docker 'openjdk:8u121-jre'	
 	}
 	steps{
-	agent {
 	sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
 	sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
- 	}
 	}
 	}
 	stage("promote to green")
