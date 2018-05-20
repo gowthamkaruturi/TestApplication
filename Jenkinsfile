@@ -111,6 +111,7 @@ echo "pushing to origin:master"
 
 sh 'git push master'
 }
+}
 
 }
 
