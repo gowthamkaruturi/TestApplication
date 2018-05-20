@@ -39,7 +39,7 @@ pipeline {
 
       }
     steps{
-    sh "mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
+    sh 'mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}'
 
     sh  'cp target/application_*.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}'
       }
@@ -66,7 +66,7 @@ pipeline {
 steps{
 agent {
 
-${env.BRANCH_NAME}sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
+sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
 sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
  }
 }
