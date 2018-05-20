@@ -69,6 +69,7 @@ pipeline {
 	sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
  	}
 	}
+	}
 	stage("promote to green")
 	{
 	agent {
@@ -110,5 +111,4 @@ pipeline {
 
 	}
 
-  }
   }
