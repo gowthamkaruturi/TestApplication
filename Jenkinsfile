@@ -61,59 +61,54 @@ pipeline {
      {
     agent
     {
-    docker 'openjdk:8u121-jre'
-}
-steps{
-agent {
+    docker 'openjdk:8u121-jre'	
+	}
+	steps{
+	agent {
+	sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
+	sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
+ 	}
+	}
+	stage("promote to green")
+	{
+	agent {
+	label 'apache'	
+	}
+	when {
+	branch 'master'
+	}
+	steps{
+	sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.BUILD_NUMBER}.jar "
+	}
+	}
+	stage("promote development to master")
+	{
+	agent {
+	label 'apache'
+	}
+	 when {
+	branch 'develop'
+	}
+	steps{
+	echo 'stashing local changes'
+	sh 'git stash '
+	echo "checking out development"
+	
+	sh 'git checkout develop'
+	
+	echo "cheking out the master branch"
+	sh 'git checkout master'
+	echo "merging development to master branch"
+	
+	sh 'git merge development'
+	
+	echo "pushing to origin:master"
+	
+	sh 'git push master'
+	}
+	}
 
-sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
-sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
- }
-}
-stage("promote to green")
-{
-agent {
-label 'apache'
-}
-when {
-branch 'master'
-}
-steps{
-sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.BUILD_NUMBER}.jar "
-}
-
-}
-stage("promote development to master")
-{
-agent {
-label 'apache'
-
-}
-steps{
-sh "cp /var/www/html/rectangles/all/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.BUILD_NUMBER}.jar "
-} when {
-branch 'develop'
-}
-steps{
-echo 'stashing local changes'
-sh 'git stash '
-echo "checking out development"
-
-sh 'git checkout develop'
-
-echo "cheking out the master branch"
-sh 'git checkout master'
-echo "merging development to master branch"
-
-sh 'git merge development'
-
-echo "pushing to origin:master"
-
-sh 'git push master'
-}
-}
-
-}
+	}
 
   }
   }
