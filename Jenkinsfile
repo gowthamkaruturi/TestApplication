@@ -45,10 +45,11 @@ pipeline {
       }
     }
 
-/*stage('running on centos'){
+/*stage('running build on centos'){
 	agent {
 	label 'CentOS'
 	}
+
 	steps{
 
 	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/application_${env.BUILD_NUMBER}.jar"
@@ -61,7 +62,7 @@ pipeline {
      {
     agent
     {
-    docker 'openjdk:8u121-jre'	
+    docker 'openjdk:8u121-jre'
 	}
 	steps{
 	sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
@@ -71,7 +72,7 @@ pipeline {
 	stage("promote to green")
 	{
 	agent {
-	label 'apache'	
+	label 'apache'
 	}
 	when {
 	branch 'master'
@@ -92,17 +93,17 @@ pipeline {
 	echo 'stashing local changes'
 	sh 'git stash '
 	echo "checking out development"
-	
+
 	sh 'git checkout develop'
-	
+
 	echo "cheking out the master branch"
 	sh 'git checkout master'
 	echo "merging development to master branch"
-	
+
 	sh 'git merge development'
-	
+
 	echo "pushing to origin:master"
-	
+
 	sh 'git push master'
 	}
 	}
