@@ -100,7 +100,7 @@ pipeline {
 	sh 'git checkout master'
 	echo "merging development to master branch"
 
-	sh 'git merge development'
+	sh 'git merge develop'
 
 	echo "pushing to origin:master"
 
