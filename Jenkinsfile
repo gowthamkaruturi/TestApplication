@@ -93,13 +93,16 @@ pipeline {
 	branch 'develop'
 	}
 	steps{
+	echo 'setting git user name'
+	sh ' git config user.name gowthamkaruturi@gmail.com '
 	echo 'stashing local changes'
 	sh 'git stash '
 	echo "checking out development"
 
 	sh 'git checkout develop'
 
-  sh 'git pull origin'
+  	sh 'git pull origin'
+  	
 
 	echo "checking out the master branch"
 	sh 'git checkout master'
