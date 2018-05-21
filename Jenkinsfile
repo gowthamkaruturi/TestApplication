@@ -42,7 +42,7 @@ pipeline {
 
       }
     steps{
-    sh " if ![-d /var/www/html/rectangles/all/${env.BRANCH_NAME}]; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
+    sh " if ![-d '/var/www/html/rectangles/all/${env.BRANCH_NAME}']; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
 
     sh  "cp application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER} /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
