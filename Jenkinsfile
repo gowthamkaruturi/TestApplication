@@ -44,7 +44,7 @@ pipeline {
     steps{
     sh "if ![ -d '/var/www/html/rectangles/all/${env.BRANCH_NAME}' ]; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}; fi"
 
-    sh  "cp target/application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER} /var/www/html/rectangles/all/${env.BRANCH_NAME}"
+    sh  "cp target/application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
     }
 
