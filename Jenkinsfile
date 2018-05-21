@@ -116,9 +116,7 @@ pipeline {
   sh "git tag application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
   sh "git push origin application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	}
-
-	}
-	post  {
+	post {
 	    failure {
 	    emailText (
 	    subject : "${env.JOB_NAME} [  ${ env.BUILD_NUMBER} ] failed !",
@@ -128,6 +126,9 @@ pipeline {
 	    )
 	    }
 	}
+
+	}
+	
 
 
 	}
