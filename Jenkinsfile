@@ -117,6 +117,20 @@ pipeline {
   sh "git push origin application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	}
 	post {
+	    success {
+	    emailText (
+	    subject : "${env.JOB_NAME} [  ${ env.BUILD_NUMBER} ] Success !",
+	    body : """<p>'${env.JOB_NAME} [${env.BUILD_NUMBER}]' Success!":</p>
+        <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+	    to:"karuturigowtham@gmail.com"
+	    )
+	    }
+	}
+
+	}
+
+	}
+	post {
 	    failure {
 	    emailText (
 	    subject : "${env.JOB_NAME} [  ${ env.BUILD_NUMBER} ] failed !",
@@ -125,12 +139,6 @@ pipeline {
 	    to:"karuturigowtham@gmail.com"
 	    )
 	    }
-	}
-
-	}
-	
-
-
 	}
 
   }
