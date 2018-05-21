@@ -42,7 +42,7 @@ pipeline {
 
       }
     steps{
-    sh " if ![-d '/var/www/html/rectangles/all/${env.BRANCH_NAME}']; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
+    sh " if ![-d '/var/www/html/rectangles/all/${env.BRANCH_NAME}']; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}; fi"
 
     sh  "cp application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER} /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
@@ -100,7 +100,7 @@ pipeline {
 	sh 'git checkout develop'
 
   sh 'git pull origin'
-  
+
 	echo "cheking out the master branch"
 	sh 'git checkout master'
 	echo "merging development to master branch"
