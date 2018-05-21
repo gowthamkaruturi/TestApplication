@@ -101,7 +101,7 @@ pipeline {
 
   sh 'git pull origin'
 
-	echo "cheking out the master branch"
+	echo "checking out the master branch"
 	sh 'git checkout master'
 	echo "merging development to master branch"
 
@@ -109,14 +109,26 @@ pipeline {
 
 	echo "pushing to origin:master"
 
-	sh 'git push origin master'.$
-  echo 'tagging the release'
+	sh 'git push origin master'
+  
+  	echo 'tagging the release'
 
   sh "git tag application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
   sh "git push origin application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	}
 
 	}
+	post  {
+	    failure {
+	    emailText (
+	    subject : "${env.JOB_NAME} [  ${ env.BUILD_NUMBER} ] failed !",
+	    body : """<p>'${env.JOB_NAME} [${env.BUILD_NUMBER}]' Failed!":</p>
+        <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+	    to:"karuturigowtham@gmail.com"
+	    )
+	    }
+	}
+
 
 	}
 
