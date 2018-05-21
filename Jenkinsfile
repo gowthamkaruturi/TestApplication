@@ -1,5 +1,8 @@
 pipeline {
   agent none
+  environment{
+  MAJOR_VERSION = 1
+  }
   tools {
     maven 'MAVEN_HOME'
   }
@@ -41,7 +44,7 @@ pipeline {
     steps{
     sh "mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
 
-    sh  "cp target/application_*.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}"
+    sh  "cp application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER} /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
     }
 
@@ -52,7 +55,7 @@ pipeline {
 
 	steps{
 
-	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/application_${env.BUILD_NUMBER}.jar"
+	sh "wget http://gowthamkaruturi1.mylabserver.com/rectangles/all/application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER}"
 	sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
 	}
     }*/
@@ -65,8 +68,8 @@ pipeline {
     docker 'openjdk:8u121-jre'
 	}
 	steps{
-	sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar"
-	sh "java -jar application_${env.BUILD_NUMBER}.jar 3 4"
+	sh "wget http://gowthamkaruturi1.mylabserver.com:80/rectangles/all/${env.BRANCH_NAME}/application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER}.jar"
+	sh "java -jar application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER}.jar 3 4"
 	}
 	}
 	stage("promote to green")
@@ -78,7 +81,7 @@ pipeline {
 	branch 'master'
 	}
 	steps{
-	sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/application_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.BUILD_NUMBER}.jar "
+	sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/application_${env.MAJOR_VERSION}_${env.BUILD_NUMBER}.jar "
 	}
 	}
 	stage("promote development to master")
@@ -104,8 +107,13 @@ pipeline {
 
 	echo "pushing to origin:master"
 
-	sh 'git push origin master'
+	sh 'git push origin master'.$
+  echo 'tagging the release'
+
+  sh "git tag application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+  sh "git push origin application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	}
+
 	}
 
 	}
