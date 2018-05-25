@@ -94,7 +94,7 @@ pipeline {
 	}
 	steps{
 	echo 'setting git user name'
-	sh ' git config user.name gowthamkaruturi@gmail.com '
+	sh ' git --config user.name gowthamkaruturi@gmail.com '
 	echo 'stashing local changes'
 	sh 'git stash '
 	echo "checking out development"
