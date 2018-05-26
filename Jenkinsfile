@@ -94,9 +94,9 @@ pipeline {
 	}
 	steps{
 	echo 'setting the remote URL'
-	
+
 	sh 'git remote set-url origin git@github.com:gowthamkaruturi/TestApplication.git'
-	
+
 	echo 'setting git user name'
 	sh ' git config user.name gowthamkaruturi@gmail.com '
 	echo 'stashing local changes'
@@ -106,7 +106,7 @@ pipeline {
 	sh 'git checkout develop'
 
   	sh 'git pull origin'
-  	
+
 
 	echo "checking out the master branch"
 	sh 'git checkout master'
@@ -117,7 +117,7 @@ pipeline {
 	echo "pushing to origin:master"
 
 	sh 'git push origin master'
-  
+
   	echo 'tagging the release'
 
   sh "git tag application-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
@@ -125,7 +125,7 @@ pipeline {
 	}
 	post {
 	    success {
-	    emailText (
+	    emailext (
 	    subject : "${env.JOB_NAME} [  ${ env.BUILD_NUMBER} ] Success !",
 	    body : """<p>'${env.JOB_NAME} [${env.BUILD_NUMBER}]' Success!":</p>
         <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
@@ -139,7 +139,7 @@ pipeline {
 	}
 	post {
 	    failure {
-	    emailText (
+	    emailext (
 	    subject : "${env.JOB_NAME} [  ${ env.BUILD_NUMBER} ] failed !",
 	    body : """<p>'${env.JOB_NAME} [${env.BUILD_NUMBER}]' Failed!":</p>
         <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
