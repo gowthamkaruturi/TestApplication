@@ -93,6 +93,10 @@ pipeline {
 	branch 'develop'
 	}
 	steps{
+	echo 'setting the remote URL'
+	
+	sh 'git remote set-url origin git@github.com:username/repo.git'
+	
 	echo 'setting git user name'
 	sh ' git config user.name gowthamkaruturi@gmail.com '
 	echo 'stashing local changes'
